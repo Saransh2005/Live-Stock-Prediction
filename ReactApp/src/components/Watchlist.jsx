@@ -10,7 +10,7 @@ export default function Watchlist({ activeStock, onSelectStock }) {
 
     const fetchWatchlist = async () => {
       try {
-        const res = await fetch('http://127.0.0.1:5001/api/watchlist');
+        const res = await fetch('https://live-stock-prediction-5pcz.onrender.com/api/watchlist');
         const data = await res.json();
         if (isMounted) {
           setItems(data);

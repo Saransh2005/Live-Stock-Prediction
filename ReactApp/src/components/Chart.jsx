@@ -90,7 +90,7 @@ export default function Chart({ activeStock, indicators }) {
     const fetchData = async (isBackground = false) => {
       if (isMounted && !isBackground) setLoading(true);
       try {
-        const res = await fetch(`http://127.0.0.1:5001/api/stock_data?stock=${activeStock}`);
+        const res = await fetch(`https://live-stock-prediction-5pcz.onrender.com/api/stock_data?stock=${activeStock}`);
         if (!res.ok) throw new Error(`Backend server error (${res.status})`);
         const data = await res.json();
         
