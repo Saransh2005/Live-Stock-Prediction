@@ -178,16 +178,10 @@ export default function Chart({ activeStock, indicators, interval, timeframe, on
         )}
       </div>
 
-      {loading && !stockInfo && (
+      {(!stockInfo || error) && (
         <div className="tv-loader">
           <div className="tv-spinner" />
           <span style={{ fontSize: 12, color: 'var(--text-muted)', letterSpacing: 1 }}>LOADING {activeStock}</span>
-        </div>
-      )}
-      {error && !loading && (
-        <div className="tv-loader">
-          <svg width="24" height="24" fill="none" stroke="#EF5350" strokeWidth="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-          <span style={{ fontSize: 12, color: '#EF5350' }}>{error}</span>
         </div>
       )}
 
