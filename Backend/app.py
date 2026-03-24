@@ -119,8 +119,15 @@ def get_watchlist():
             if data.empty:
                 continue
                 
-            latest_close = float(data['Close'].iloc[-1] if hasattr(data['Close'], 'iloc') else data['Close'])
-            prev_close = float(data['Close'].iloc[-2] if hasattr(data['Close'], 'iloc') else data['Close']) if len(data) > 1 else latest_close
+            # Robustly extract close column whether it is a Series or DataFrame
+            close_col = data['Close']
+            if hasattr(close_col, 'columns'): # It's a DataFrame (MultiIndex)
+                close_series = close_col.iloc[:, 0]
+            else:
+                close_series = close_col
+                
+            latest_close = float(close_series.iloc[-1])
+            prev_close = float(close_series.iloc[-2]) if len(close_series) > 1 else latest_close
             
             prediction = model.predict([[latest_close]])
             pred_price = float(prediction[0])
@@ -133,7 +140,8 @@ def get_watchlist():
                 "prediction": pred_price,
                 "signal": "bullish" if diff >= 0 else "bearish"
             })
-        except Exception:
+        except Exception as e:
+            print(f"Watchlist error for {stock}: {e}")
             pass
 
     return jsonify(results)
