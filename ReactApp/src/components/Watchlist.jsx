@@ -25,7 +25,8 @@ export default function Watchlist({ activeStock, onSelectStock }) {
     let alive = true;
     const fetch_ = async () => {
       try {
-        const res = await fetch(`/api/watchlist?stocks=${allSymbols}`);
+        const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:5001';
+        const res = await fetch(`${API_BASE}/api/watchlist?stocks=${allSymbols}`);
         const list = await res.json();
         if (!alive) return;
         const map = {};

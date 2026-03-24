@@ -153,7 +153,8 @@ export default function LandingPage() {
 
   useEffect(() => {
     const syms = 'AAPL,TSLA,NVDA,^GSPC,^NDX,^NSEI,^BSESN,BTC-USD,ETH-USD,GC=F,CL=F';
-    fetch(`/api/watchlist?stocks=${syms}`)
+    const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:5001';
+    fetch(`${API_BASE}/api/watchlist?stocks=${syms}`)
       .then(r => r.json())
       .then(arr => {
         const m = {}; arr.forEach(d => { m[d.stock] = d; }); setMktData(m);
