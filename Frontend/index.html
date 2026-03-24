@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI TradingView Platform</title>
+    <!-- TradingView Lightweight Charts (Pinned to v4.1.1) -->
+    <script src="https://unpkg.com/lightweight-charts@4.1.1/dist/lightweight-charts.standalone.production.js"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0B0E14;
+            --panel-bg: #151924;
+            --text-main: #D1D4DC;
+            --text-muted: #848E9C;
+            --accent-bull: #26A69A;
+            --accent-bear: #EF5350;
+            --accent-ai: #8A2BE2;
+            --border-color: #2B3139;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Top Navigation / Controls */
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: var(--panel-bg);
+            padding: 12px 24px;
+            border-bottom: 1px solid var(--border-color);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            z-index: 10;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 20px;
+            font-weight: 800;
+            color: white;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .brand span {
+            color: var(--accent-ai);
+        }
+
+        .search-container {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            background: rgba(43, 49, 57, 0.5);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .search-container:focus-within {
+            border-color: var(--accent-ai);
+            box-shadow: 0 0 10px rgba(138, 43, 226, 0.3);
+        }
+
+        input {
+            background: transparent;
+            border: none;
+            color: white;
+            padding: 8px 16px;
+            font-size: 16px;
+            outline: none;
+            width: 250px;
+            text-transform: uppercase;
+        }
+
+        input::placeholder {
+            color: var(--text-muted);
+            text-transform: none;
+        }
+
+        button.search-btn {
+            background: linear-gradient(135deg, #8A2BE2, #4B0082);
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        button.search-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(138, 43, 226, 0.4);
+        }
+
+        /* Main Workspace */
+        .workspace {
+            display: flex;
+            flex: 1;
+            height: calc(100vh - 65px);
+        }
+
+        /* Chart Area */
+        .chart-container {
+            flex: 1;
+            position: relative;
+            border-right: 1px solid var(--border-color);
+        }
+
+        #tvchart {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+
+        /* Side Panel */
+        .side-panel {
+            width: 320px;
+            background-color: var(--panel-bg);
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            overflow-y: auto;
+            position: relative;
+            z-index: 5;
+        }
+
+        .panel-section {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Dynamic Glow Effects */
+        .panel-section::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(circle at top right, rgba(255,255,255,0.05) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .section-title {
+            font-size: 12px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            font-weight: 600;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .price-display {
+            font-size: 36px;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 4px;
+        }
+
+        .prediction-display {
+            font-size: 28px;
+            font-weight: 800;
+        }
+        
+        .prediction-diff {
+            font-size: 14px;
+            font-weight: 600;
+            padding: 4px 8px;
+            border-radius: 4px;
+            display: inline-block;
+            margin-top: 8px;
+        }
+
+        .bullish { color: var(--accent-bull); }
+        .bearish { color: var(--accent-bear); }
+        .bg-bullish { background: rgba(38, 166, 154, 0.15); color: var(--accent-bull); }
+        .bg-bearish { background: rgba(239, 83, 80, 0.15); color: var(--accent-bear); }
+
+        /* Loader Overlay */
+        .loader-overlay {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(11, 14, 20, 0.8);
+            backdrop-filter: blur(4px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+            color: var(--accent-ai);
+            display: none;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid var(--border-color);
+            border-top-color: var(--accent-ai);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 16px;
+        }
+
+        @keyframes spin { 
+            to { transform: rotate(360deg); } 
+        }
+
+        .ticker-header {
+            font-size: 20px;
+            font-weight: bold;
+            color: white;
+            margin-bottom: 16px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 10px;
+        }
+
+        /* AI Badge */
+        .ai-badge {
+            background: linear-gradient(135deg, #8A2BE2, #4B0082);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 10px;
+            font-weight: 800;
+            margin-left: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="brand">
+            📈 Trading<span>AI</span>
+            <div style="font-size: 13px; font-weight: normal; margin-left: 30px; display: flex; gap: 15px; color: var(--text-muted);">
+                <label style="cursor: pointer; display: flex; align-items: center; gap: 5px;">
+                    <input type="checkbox" id="toggleSMA" onchange="toggleIndicators()" checked> SMA (20)
+                </label>
+                <label style="cursor: pointer; display: flex; align-items: center; gap: 5px;">
+                    <input type="checkbox" id="toggleEMA" onchange="toggleIndicators()" checked> EMA (20)
+                </label>
+            </div>
+        </div>
+        <div class="search-container">
+            <input type="text" id="stockInput" placeholder="Enter Ticker (e.g. AAPL)" value="AAPL" autocomplete="off" onkeypress="handleKeyPress(event)">
+            <button class="search-btn" onclick="startAutoRefresh()">Analyze</button>
+        </div>
+    </header>
+
+    <div class="workspace">
+        <div class="chart-container" id="chart-container">
+            <div id="tvchart"></div>
+            <div class="loader-overlay" id="chartLoader">
+                <div class="spinner"></div>
+                <div style="font-weight: 600; letter-spacing: 1px;">ANALYZING DATA...</div>
+            </div>
+        </div>
+
+        <div class="side-panel">
+            <div class="ticker-header" id="panelTicker">AAPL</div>
+
+            <div class="panel-section">
+                <div class="section-title">
+                    💰 Current Price
+                </div>
+                <div class="price-display" id="currentPrice">--</div>
+                <div style="color: var(--text-muted); font-size: 13px;">Latest Market Close</div>
+            </div>
+
+            <div class="panel-section" style="border-color: rgba(138, 43, 226, 0.4);">
+                <div class="section-title">
+                    🤖 AI Prediction
+                    <span class="ai-badge">PRO</span>
+                </div>
+                <div class="prediction-display" id="predictedPrice">--</div>
+                <div class="prediction-diff" id="predictionDiff">--</div>
+            </div>
+
+            <div class="panel-section">
+                <div class="section-title">📊 Analysis Output</div>
+                <p id="insightText" style="font-size: 14px; line-height: 1.5; color: var(--text-muted);">
+                    Enter a stock ticker to generate AI-driven price predictions based on the latest historical market data.
+                </p>
+            </div>
+
+            <!-- WATCHLIST -->
+            <div class="panel-section" style="flex: 1; display: flex; flex-direction: column;">
+                <div class="section-title">⭐ Watchlist</div>
+                <div id="watchlistItems" style="display: flex; flex-direction: column; gap: 10px; overflow-y: auto; padding-right: 5px; margin-top: 10px;">
+                    <div style="font-size: 13px; color: var(--text-muted); text-align: center;">Loading watchlist...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let chart = null;
+        let candleSeries = null;
+        let smaSeries = null;
+        let emaSeries = null;
+
+        function initChart() {
+            try {
+                if (typeof LightweightCharts === 'undefined') {
+                    throw new Error("LightweightCharts script not loaded. Check internet or adblockers.");
+                }
+
+                const chartContainer = document.getElementById('tvchart');
+                
+                // Minimal property set to avoid version compatibility issues
+                const chartProperties = {
+                    width: chartContainer.clientWidth || 800,
+                    height: chartContainer.clientHeight || 500,
+                    layout: {
+                        background: { type: 'solid', color: '#0B0E14' },
+                        textColor: '#D1D4DC',
+                    },
+                    grid: {
+                        vertLines: { color: '#2B3139' },
+                        horzLines: { color: '#2B3139' },
+                    },
+                    timeScale: {
+                        timeVisible: true,
+                    },
+                };
+
+                chart = LightweightCharts.createChart(chartContainer, chartProperties);
+                
+                candleSeries = chart.addCandlestickSeries({
+                    upColor: '#26A69A',
+                    downColor: '#EF5350',
+                    borderDownColor: '#EF5350',
+                    borderUpColor: '#26A69A',
+                    wickDownColor: '#EF5350',
+                    wickUpColor: '#26A69A',
+                });
+
+                smaSeries = chart.addLineSeries({
+                    color: '#FFD700',
+                    lineWidth: 2,
+                    crosshairMarkerVisible: false,
+                    lastValueVisible: false,
+                    priceLineVisible: false,
+                });
+
+                emaSeries = chart.addLineSeries({
+                    color: '#8A2BE2',
+                    lineWidth: 2,
+                    crosshairMarkerVisible: false,
+                    lastValueVisible: false,
+                    priceLineVisible: false,
+                });
+
+                // Handle window resize
+                window.addEventListener('resize', () => {
+                    if (chart && chartContainer) {
+                        chart.applyOptions({
+                            width: chartContainer.clientWidth,
+                            height: chartContainer.clientHeight
+                        });
+                    }
+                });
+                
+                // Set initial size
+                chart.applyOptions({
+                    width: chartContainer.clientWidth,
+                    height: chartContainer.clientHeight
+                });
+            } catch (err) {
+                console.error("Chart initialization failed:", err);
+                alert("Chart error: " + err.message);
+            }
+        }
+
+        let refreshInterval = null;
+
+        function handleKeyPress(e) {
+            if (e.key === 'Enter') {
+                startAutoRefresh();
+            }
+        }
+
+        function toggleIndicators() {
+            if (smaSeries) {
+                const showSMA = document.getElementById('toggleSMA').checked;
+                smaSeries.applyOptions({ visible: showSMA });
+            }
+            if (emaSeries) {
+                const showEMA = document.getElementById('toggleEMA').checked;
+                emaSeries.applyOptions({ visible: showEMA });
+            }
+        }
+
+        async function fetchWatchlist() {
+            try {
+                const res = await fetch('http://127.0.0.1:5001/api/watchlist');
+                const data = await res.json();
+                
+                const container = document.getElementById('watchlistItems');
+                container.innerHTML = '';
+                
+                data.forEach(item => {
+                    const isBull = item.signal === 'bullish';
+                    const color = isBull ? 'var(--accent-bull)' : 'var(--accent-bear)';
+                    const sign = item.change_pct >= 0 ? '+' : '';
+                    
+                    const el = document.createElement('div');
+                    el.style.cssText = `display: flex; justify-content: space-between; align-items: center; padding: 10px; background: rgba(255,255,255,0.03); border-radius: 8px; cursor: pointer; transition: background 0.2s; border: 1px solid transparent;`;
+                    el.onmouseover = () => el.style.borderColor = 'var(--border-color)';
+                    el.onmouseout = () => el.style.borderColor = 'transparent';
+                    
+                    el.onclick = () => {
+                        document.getElementById('stockInput').value = item.stock;
+                        startAutoRefresh();
+                    };
+                    
+                    el.innerHTML = `
+                        <div>
+                            <div style="font-weight: 800; color: white;">${item.stock}</div>
+                            <div style="font-size: 11px; color: var(--text-muted);">${sign}${item.change_pct.toFixed(2)}%</div>
+                        </div>
+                        <div style="text-align: right;">
+                            <div style="font-weight: 600;">$${item.price.toFixed(2)}</div>
+                            <div style="font-size: 11px; color: ${color}; font-weight: 600;">AI: $${item.prediction.toFixed(2)}</div>
+                        </div>
+                    `;
+                    container.appendChild(el);
+                });
+            } catch (err) {
+                document.getElementById('watchlistItems').innerHTML = '<div style="color:var(--accent-bear); font-size: 12px;">Failed to load watchlist</div>';
+            }
+        }
+
+        function startAutoRefresh() {
+            if (refreshInterval) clearInterval(refreshInterval);
+            
+            loadData(); // Load immediately
+            
+            // Auto refresh every 60 seconds (1 minute)
+            refreshInterval = setInterval(() => {
+                loadData(true); // Auto-refresh in background
+                fetchWatchlist();
+            }, 60000);
+        }
+
+        async function loadData(isAutoRefresh = false) {
+            if (!candleSeries) {
+                alert("Chart is not initialized yet. Check the console for errors.");
+                return;
+            }
+
+            const stock = document.getElementById('stockInput').value.trim().toUpperCase();
+            if (!stock) return;
+
+            const loader = document.getElementById('chartLoader');
+            if (!isAutoRefresh) loader.style.display = 'flex';
+
+            try {
+                // Fetch data from backend
+                const response = await fetch(`http://127.0.0.1:5001/api/stock_data?stock=${stock}`);
+                
+                // Provide a better error if backend isn't reachable
+                if (!response.ok) {
+                    throw new Error(`Server returned status ${response.status}`);
+                }
+                
+                const data = await response.json();
+
+                if (data.error) {
+                    throw new Error(data.error);
+                }
+
+                // Prepare SMA & EMA data
+                const smaData = [];
+                const emaData = [];
+                
+                data.chart_data.forEach(d => {
+                    if (!isNaN(d.sma)) smaData.push({ time: d.time, value: d.sma });
+                    if (!isNaN(d.ema)) emaData.push({ time: d.time, value: d.ema });
+                });
+
+                // Update Chart
+                candleSeries.setData(data.chart_data);
+                if (smaSeries) smaSeries.setData(smaData);
+                if (emaSeries) emaSeries.setData(emaData);
+                
+                chart.timeScale().fitContent();
+
+                // Update Side Panel
+                document.getElementById('panelTicker').innerText = data.stock;
+                
+                const currPrice = data.current_price;
+                const predPrice = data.predicted_price;
+                
+                document.getElementById('currentPrice').innerText = `$${currPrice.toFixed(2)}`;
+                document.getElementById('predictedPrice').innerText = `$${predPrice.toFixed(2)}`;
+
+                // Calculate diff
+                const diff = predPrice - currPrice;
+                const diffPercent = (diff / currPrice) * 100;
+                
+                const diffEl = document.getElementById('predictionDiff');
+                const isBullish = diff >= 0;
+                
+                diffEl.innerText = `${isBullish ? '+' : ''}${diff.toFixed(2)} (${diffPercent.toFixed(2)}%)`;
+                
+                if (isBullish) {
+                    diffEl.className = 'prediction-diff bg-bullish';
+                    document.getElementById('predictedPrice').className = 'prediction-display bullish';
+                    document.getElementById('insightText').innerHTML = `AI Model indicates a <strong style='color:#26A69A'>Bullish</strong> trend for ${data.stock}. Expected upward momentum based on recent price action.`;
+                } else {
+                    diffEl.className = 'prediction-diff bg-bearish';
+                    document.getElementById('predictedPrice').className = 'prediction-display bearish';
+                    document.getElementById('insightText').innerHTML = `AI Model indicates a <strong style='color:#EF5350'>Bearish</strong> trend for ${data.stock}. Caution advised as downward pressure is expected.`;
+                }
+
+            } catch (err) {
+                // If the fetch failed with a network error, tell the user the backend is down
+                if (err instanceof TypeError && err.message.includes('fetch')) {
+                    alert('Error: Backend is not running or unreachable. Ensure "python app.py" is running on port 5001.');
+                } else {
+                    alert(`Error loading data: ${err.message}`);
+                }
+                console.error(err);
+                
+                // Reset UI on error
+                document.getElementById('currentPrice').innerText = '--';
+                document.getElementById('predictedPrice').innerText = '--';
+                document.getElementById('predictionDiff').innerText = '--';
+                document.getElementById('predictionDiff').className = 'prediction-diff';
+            } finally {
+                loader.style.display = 'none';
+            }
+        }
+
+        // Initialize and load AAPL on initial startup
+        document.addEventListener('DOMContentLoaded', () => {
+            initChart();
+            toggleIndicators();
+            // Start the auto-refresh loop immediately
+            startAutoRefresh();
+            fetchWatchlist();
+        });
+    </script>
+</body>
+</html>

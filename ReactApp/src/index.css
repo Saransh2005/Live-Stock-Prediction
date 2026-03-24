@@ -1,0 +1,41 @@
+:root {
+  --bg-color: #0B0E14;
+  --panel-bg: #131722;
+  --panel-border: #2B3139;
+  --text-main: #D1D4DC;
+  --text-muted: #787B86;
+  --accent-bull: #089981;
+  --accent-bear: #F23645;
+  --accent-blue: #2962FF;
+  --font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Trebuchet MS', Roboto, Ubuntu, sans-serif;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-family);
+  background-color: var(--bg-color);
+  color: var(--text-main);
+  height: 100vh;
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-color);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--panel-border);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
