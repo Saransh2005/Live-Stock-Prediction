@@ -1,187 +1,196 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { createChart } from 'lightweight-charts';
 
-export default function Chart({ activeStock, indicators }) {
-  const chartContainerRef = useRef(null);
+export default function Chart({ activeStock, indicators, interval, timeframe, onDataUpdate }) {
+  const containerRef = useRef(null);
   const chartRef = useRef(null);
-  const seriesRef = useRef({ candle: null, sma: null, ema: null });
+  const seriesRef = useRef({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [stockInfo, setStockInfo] = useState(null);
 
+  // Map timeframes to yfinance period/interval params
+  const TF_MAP = {
+    '1D': { period: '1d', interval: '5m' },
+    '5D': { period: '5d', interval: '15m' },
+    '1M': { period: '1mo', interval: '1d' },
+    '3M': { period: '3mo', interval: '1d' },
+    '6M': { period: '6mo', interval: '1d' },
+    'YTD': { period: 'ytd', interval: '1d' },
+    '1Y': { period: '1y', interval: '1d' },
+    '5Y': { period: '5y', interval: '1wk' },
+    'All': { period: 'max', interval: '1mo' },
+  };
+
   useEffect(() => {
-    if (!chartContainerRef.current) return;
+    if (!containerRef.current) return;
+    const chart = createChart(containerRef.current, {
+      layout: { background: { color: '#1E222D' }, textColor: '#787B86' },
+      grid: { vertLines: { color: '#2B3139' }, horzLines: { color: '#2B3139' } },
+      crosshair: {
+        mode: 0,
+        vertLine: { color: '#758696', style: 1, labelBackgroundColor: '#363A45' },
+        horzLine: { color: '#758696', style: 1, labelBackgroundColor: '#363A45' },
+      },
+      rightPriceScale: { borderColor: '#2B3139' },
+      timeScale: { borderColor: '#2B3139', timeVisible: true, rightOffset: 12 },
+    });
 
-    let chart;
-    try {
-      chart = createChart(chartContainerRef.current, {
-        layout: {
-          background: { type: 'solid', color: '#0B0E14' },
-          textColor: '#D1D4DC',
-        },
-        grid: {
-          vertLines: { color: '#2B3139' },
-          horzLines: { color: '#2B3139' },
-        },
-        crosshair: {
-          mode: 0,
-        },
-        rightPriceScale: {
-          borderColor: '#2B3139',
-        },
-        timeScale: {
-          borderColor: '#2B3139',
-          timeVisible: true,
-        },
-      });
+    const candle = chart.addCandlestickSeries({
+      upColor: '#26A69A', downColor: '#EF5350',
+      borderUpColor: '#26A69A', borderDownColor: '#EF5350',
+      wickUpColor: '#26A69A', wickDownColor: '#EF5350',
+    });
 
-      chartRef.current = chart;
+    const sma = chart.addLineSeries({
+      color: '#EFB90B', lineWidth: 1.5,
+      crosshairMarkerVisible: false, lastValueVisible: false, priceLineVisible: false,
+    });
 
-      const candleSeries = chart.addCandlestickSeries({
-        upColor: '#089981',
-        downColor: '#F23645',
-        borderDownColor: '#F23645',
-        borderUpColor: '#089981',
-        wickDownColor: '#F23645',
-        wickUpColor: '#089981',
-      });
+    const ema = chart.addLineSeries({
+      color: '#FF6D00', lineWidth: 1.5,
+      crosshairMarkerVisible: false, lastValueVisible: false, priceLineVisible: false,
+    });
 
-      const smaSeries = chart.addLineSeries({
-        color: '#FFD700',
-        lineWidth: 2,
-        crosshairMarkerVisible: false,
-        lastValueVisible: false,
-        priceLineVisible: false,
-      });
+    const bbUp = chart.addLineSeries({
+      color: 'rgba(38, 166, 154, 0.4)', lineWidth: 1, lineStyle: 2,
+      crosshairMarkerVisible: false, lastValueVisible: false, priceLineVisible: false,
+    });
 
-      const emaSeries = chart.addLineSeries({
-        color: '#2962FF',
-        lineWidth: 2,
-        crosshairMarkerVisible: false,
-        lastValueVisible: false,
-        priceLineVisible: false,
-      });
+    const bbLow = chart.addLineSeries({
+      color: 'rgba(38, 166, 154, 0.4)', lineWidth: 1, lineStyle: 2,
+      crosshairMarkerVisible: false, lastValueVisible: false, priceLineVisible: false,
+    });
 
-      seriesRef.current = { candle: candleSeries, sma: smaSeries, ema: emaSeries };
+    seriesRef.current = { candle, sma, ema, bbUp, bbLow };
+    chartRef.current = chart;
 
-      const resizeObserver = new ResizeObserver(entries => {
-        if (entries.length === 0 || entries[0].target !== chartContainerRef.current) return;
-        const newRect = entries[0].contentRect;
-        chart.applyOptions({ height: newRect.height, width: newRect.width });
-      });
-      
-      resizeObserver.observe(chartContainerRef.current);
-      
-      return () => {
-        resizeObserver.disconnect();
-        chart.remove();
-      };
-    } catch (err) {
-      console.error("Init Error:", err);
-      setError(err.message);
-    }
+    const obs = new ResizeObserver(entries => {
+      if (!entries[0]) return;
+      const { width, height } = entries[0].contentRect;
+      chart.applyOptions({ width, height });
+    });
+    obs.observe(containerRef.current);
+
+    return () => { obs.disconnect(); chart.remove(); };
   }, []);
 
-  // Fetch data
   useEffect(() => {
-    let isMounted = true;
-    let interval;
-
-    const fetchData = async (isBackground = false) => {
-      if (isMounted && !isBackground) setLoading(true);
+    let alive = true;
+    const tf = TF_MAP[timeframe] || TF_MAP['3M'];
+    const fetchData = async (bg = false) => {
+      if (!bg) setLoading(true);
       try {
-        const res = await fetch(`https://live-stock-prediction-5pcz.onrender.com/api/stock_data?stock=${activeStock}`);
-        if (!res.ok) throw new Error(`Backend server error (${res.status})`);
+        const url = `http://localhost:5001/api/stock_data?stock=${activeStock}&period=${tf.period}&interval=${tf.interval}`;
+        const res = await fetch(url);
+        if (!res.ok) throw new Error(`Server error ${res.status}`);
         const data = await res.json();
-        
         if (data.error) throw new Error(data.error);
+        if (!alive) return;
 
-        if (!isMounted) return;
+        seriesRef.current.candle?.setData(data.chart_data);
 
-        if (seriesRef.current.candle) {
-          seriesRef.current.candle.setData(data.chart_data);
-        }
-        
-        const smaData = [];
-        const emaData = [];
-        
+        const smaD = [], emaD = [], bbUpD = [], bbLowD = [];
         data.chart_data.forEach(d => {
-            if (!isNaN(d.sma) && d.sma !== null) smaData.push({ time: d.time, value: d.sma });
-            if (!isNaN(d.ema) && d.ema !== null) emaData.push({ time: d.time, value: d.ema });
+          if (d.sma != null) smaD.push({ time: d.time, value: d.sma });
+          if (d.ema != null) emaD.push({ time: d.time, value: d.ema });
+          if (d.bb_up != null) bbUpD.push({ time: d.time, value: d.bb_up });
+          if (d.bb_low != null) bbLowD.push({ time: d.time, value: d.bb_low });
         });
-        
-        if (seriesRef.current.sma) seriesRef.current.sma.setData(smaData);
-        if (seriesRef.current.ema) seriesRef.current.ema.setData(emaData);
+        seriesRef.current.sma?.setData(smaD);
+        seriesRef.current.ema?.setData(emaD);
+        seriesRef.current.bbUp?.setData(bbUpD);
+        seriesRef.current.bbLow?.setData(bbLowD);
 
-        if (!isBackground && chartRef.current) {
-           chartRef.current.timeScale().fitContent();
-        }
+        if (!bg) chartRef.current?.timeScale().fitContent();
 
-        setStockInfo({
+        const lastBar = data.chart_data[data.chart_data.length - 1];
+        const prevBar = data.chart_data[data.chart_data.length - 2];
+        const info = {
           price: data.current_price,
-          prediction: data.predicted_price
-        });
+          prediction: data.predicted_price,
+          change_pct: data.change_pct,
+          sentiment: data.sentiment,
+          rsi: data.rsi,
+          high: data.high,
+          low: data.low,
+          volume_today: data.volume_today,
+          open: lastBar?.open,
+        };
+        setStockInfo(info);
+        if (onDataUpdate) onDataUpdate(info);
         setError(null);
-      } catch (err) {
-        if (isMounted) setError(err.message);
+      } catch (e) {
+        if (alive) setError(e.message);
       } finally {
-        if (isMounted) setLoading(false);
+        if (alive) setLoading(false);
       }
     };
-
     fetchData(false);
-    interval = setInterval(() => fetchData(true), 60000);
+    const id = setInterval(() => fetchData(true), 60000);
+    return () => { alive = false; clearInterval(id); };
+  }, [activeStock, timeframe]);
 
-    return () => {
-      isMounted = false;
-      clearInterval(interval);
-    };
-  }, [activeStock]);
-
-  // Toggle indicators
   useEffect(() => {
-    if (seriesRef.current.sma) {
-      seriesRef.current.sma.applyOptions({ visible: indicators.sma });
-    }
-    if (seriesRef.current.ema) {
-      seriesRef.current.ema.applyOptions({ visible: indicators.ema });
-    }
+    if (!seriesRef.current.sma) return;
+    seriesRef.current.sma.applyOptions({ visible: indicators?.sma ?? true });
+    seriesRef.current.ema.applyOptions({ visible: indicators?.ema ?? false });
+    seriesRef.current.bbUp.applyOptions({ visible: indicators?.bb ?? false });
+    seriesRef.current.bbLow.applyOptions({ visible: indicators?.bb ?? false });
   }, [indicators]);
 
+  const isBull = stockInfo && stockInfo.change_pct >= 0;
+
   return (
-    <>
-      <div className="chart-info-overlay">
-        <h1 className="chart-title">{activeStock}</h1>
+    <div style={{ position: 'relative', width: '100%', height: '100%', background: '#1E222D' }}>
+      {/* OHLCV overlay */}
+      <div className="tv-chart-overlay">
+        <div className="tco-sym">{activeStock} · 1D · NASDAQ</div>
         {stockInfo && (
-          <>
-            <div className="chart-price">${stockInfo.price.toFixed(2)}</div>
-            <div className="ai-prediction-badge">
-               🤖 AI Prediction: <span className={stockInfo.prediction >= stockInfo.price ? 'bullish' : 'bearish'} style={{ marginLeft: 4 }}>
-                 ${stockInfo.prediction.toFixed(2)}
-               </span>
-               <span className="badge-pro">PRO</span>
+          <div className="tco-ohlcv">
+            <span>O <span>{stockInfo.open?.toFixed(2) ?? '—'}</span></span>
+            <span>H <span>{stockInfo.high?.toFixed(2) ?? '—'}</span></span>
+            <span>L <span>{stockInfo.low?.toFixed(2) ?? '—'}</span></span>
+            <span>C <span>{stockInfo.price?.toFixed(2) ?? '—'}</span></span>
+            <span className={`tco-change ${isBull ? '' : 'down'}`}>
+              {isBull ? '+' : ''}{stockInfo.change_pct?.toFixed(2) ?? '0.00'} ({isBull ? '+' : ''}{stockInfo.change_pct?.toFixed(2) ?? '0.00'}%)
+            </span>
+          </div>
+        )}
+
+        {/* AI badges — TradingView-style price labels */}
+        {stockInfo && (
+          <div style={{ display: 'flex', gap: 8, marginTop: 8 }}>
+            <div style={{
+              background: '#EF5350', color: 'white', padding: '3px 8px',
+              borderRadius: 3, fontSize: 12, fontWeight: 700,
+            }}>
+              SELL {stockInfo.price?.toFixed(2)}
             </div>
-          </>
+            <div style={{
+              background: '#26A69A', color: 'white', padding: '3px 8px',
+              borderRadius: 3, fontSize: 12, fontWeight: 700,
+            }}>
+              AI {stockInfo.prediction?.toFixed(2)}
+            </div>
+          </div>
         )}
       </div>
 
       {loading && !stockInfo && (
-        <div className="fullscreen-loader">
-          ANALYZING {activeStock}...
+        <div className="tv-loader">
+          <div className="tv-spinner" />
+          <span style={{ fontSize: 12, color: 'var(--text-muted)', letterSpacing: 1 }}>LOADING {activeStock}</span>
         </div>
       )}
-      
-      {error && (
-        <div className="fullscreen-loader" style={{color: 'var(--accent-bear)'}}>
-          Error: {error}
+      {error && !loading && (
+        <div className="tv-loader">
+          <svg width="24" height="24" fill="none" stroke="#EF5350" strokeWidth="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          <span style={{ fontSize: 12, color: '#EF5350' }}>{error}</span>
         </div>
       )}
 
-      {/* Identical sizing logic as HTML index.html */}
-      <div 
-        ref={chartContainerRef} 
-        style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, width: '100%', height: '100%' }} 
-      />
-    </>
+      <div ref={containerRef} className="tv-chart-container" />
+    </div>
   );
 }
