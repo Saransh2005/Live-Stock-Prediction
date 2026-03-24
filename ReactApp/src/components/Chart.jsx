@@ -81,7 +81,7 @@ export default function Chart({ activeStock, indicators, interval, timeframe, on
     const fetchData = async (bg = false) => {
       if (!bg) setLoading(true);
       try {
-        const url = `import.meta.env.VITE_API_URL/api/stock_data?stock=${activeStock}&period=${tf.period}&interval=${tf.interval}`;
+        const url = `/api/stock_data?stock=${activeStock}&period=${tf.period}&interval=${tf.interval}`;
         const res = await fetch(url);
         if (!res.ok) throw new Error(`Server error ${res.status}`);
         const data = await res.json();
