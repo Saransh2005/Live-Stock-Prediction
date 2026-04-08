@@ -163,7 +163,7 @@ export default function LandingPage() {
 
   const handleSearch = (e) => {
     e.preventDefault();
-    if (search.trim()) window.open(`/stock/${search.trim().toUpperCase()}`, '_blank');
+    if (search.trim()) navigate(`/stock/${search.trim().toUpperCase()}`);
   };
 
   const spx = mktData['^GSPC'];
@@ -183,7 +183,9 @@ export default function LandingPage() {
         </form>
 
         <div className="lp-navlinks">
-          {NAV.map(n => <span key={n} className="lp-navlink">{n}</span>)}
+          {NAV.map(n => (
+            <Link key={n} to={`/${n.toLowerCase()}`} className="lp-navlink" style={{ textDecoration: 'none' }}>{n}</Link>
+          ))}
         </div>
 
         <div className="lp-topright">
@@ -229,7 +231,7 @@ export default function LandingPage() {
               <div className="lp-major-indices">
                 <div className="lp-mi-title">Major indices</div>
                 {MAJOR_INDICES.map((idx, i) => (
-                  <Link to={`/stock/${idx.ticker}`} target="_blank" key={i} className="lp-mi-row">
+                  <Link to={`/stock/${idx.ticker}`} key={i} className="lp-mi-row" style={{ textDecoration: 'none' }}>
                     <div className="lp-mi-left">
                       <div className="lp-mi-badge" style={{ background: idx.bg }}>
                         {typeof idx.badge === 'string' ? idx.badge : idx.badge}

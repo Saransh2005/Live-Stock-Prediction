@@ -1,13 +1,19 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { createChart } from 'lightweight-charts';
 
-export default function Chart({ activeStock, indicators, interval, timeframe, onDataUpdate }) {
+export default function Chart({ activeStock, indicators, interval, timeframe, activeTool, onDataUpdate }) {
   const containerRef = useRef(null);
   const chartRef = useRef(null);
   const seriesRef = useRef({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [stockInfo, setStockInfo] = useState(null);
+
+  const [drawings, setDrawings] = useState([]);
+  const [currentDraw, setCurrentDraw] = useState(null);
+  const [redraw, setRedraw] = useState(0);
+
+  const isDrawing = activeTool && !['cursor', 'crosshair', 'trash', 'zoomin', 'lock', 'hide'].includes(activeTool);
 
   // Map timeframes to yfinance period/interval params
   const TF_MAP = {
@@ -72,7 +78,16 @@ export default function Chart({ activeStock, indicators, interval, timeframe, on
     });
     obs.observe(containerRef.current);
 
-    return () => { obs.disconnect(); chart.remove(); };
+    const handler = () => setRedraw(r => r + 1);
+    chart.timeScale().subscribeVisibleLogicalRangeChange(handler);
+    chart.timeScale().subscribeSizeChange(handler);
+
+    return () => {
+      obs.disconnect();
+      chart.timeScale().unsubscribeVisibleLogicalRangeChange(handler);
+      chart.timeScale().unsubscribeSizeChange(handler);
+      chart.remove();
+    };
   }, []);
 
   useEffect(() => {
@@ -140,7 +155,84 @@ export default function Chart({ activeStock, indicators, interval, timeframe, on
     seriesRef.current.bbLow.applyOptions({ visible: indicators?.bb ?? false });
   }, [indicators]);
 
+  useEffect(() => {
+    if (activeTool === 'trash') setDrawings([]);
+    if (!chartRef.current) return;
+    chartRef.current.applyOptions({
+      handleScroll: !isDrawing,
+      handleScale: !isDrawing,
+    });
+  }, [activeTool, isDrawing]);
+
   const isBull = stockInfo && stockInfo.change_pct >= 0;
+
+  const getLogicalPoint = (e) => {
+    if (!containerRef.current || !chartRef.current || !seriesRef.current.candle) return null;
+    const rect = containerRef.current.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const time = chartRef.current.timeScale().coordinateToTime(x);
+    const price = seriesRef.current.candle.coordinateToPrice(y);
+    return { time, price, x, y };
+  };
+
+  const handleMouseDown = (e) => {
+    if (!isDrawing) return;
+    const pt = getLogicalPoint(e);
+    if (!pt || !pt.time || pt.price == null) return;
+    setCurrentDraw({ tool: activeTool, points: [pt] });
+  };
+
+  const handleMouseMove = (e) => {
+    if (!currentDraw) return;
+    const pt = getLogicalPoint(e);
+    if (!pt || !pt.time || pt.price == null) return;
+
+    if (currentDraw.tool === 'pencil') {
+      setCurrentDraw(prev => ({ ...prev, points: [...prev.points, pt] }));
+    } else {
+      setCurrentDraw(prev => ({ ...prev, points: [prev.points[0], pt] }));
+    }
+  };
+
+  const handleMouseUp = () => {
+    if (!currentDraw) return;
+    setDrawings(prev => [...prev, currentDraw]);
+    setCurrentDraw(null);
+  };
+
+  const renderShape = (shape, i) => {
+    if (!chartRef.current || !seriesRef.current.candle) return null;
+    const pts = shape.points.map(p => {
+      const x = chartRef.current.timeScale().timeToCoordinate(p.time) ?? p.x;
+      const y = seriesRef.current.candle.priceToCoordinate(p.price) ?? p.y;
+      return { x, y };
+    });
+    if (pts.length === 0) return null;
+
+    if (shape.tool === 'line' || shape.tool === 'ray' || shape.tool === 'channel' || shape.tool === 'ruler') {
+      if (pts.length < 2) return null;
+      let x2 = pts[1].x, y2 = pts[1].y;
+      if (shape.tool === 'ray') {
+        const dx = pts[1].x - pts[0].x;
+        const dy = pts[1].y - pts[0].y;
+        x2 = pts[0].x + dx * 100;
+        y2 = pts[0].y + dy * 100;
+      }
+      return <line key={i} x1={pts[0].x} y1={pts[0].y} x2={x2} y2={y2} stroke="#26A69A" strokeWidth="2" />;
+    }
+    if (shape.tool === 'hline') {
+      return <line key={i} x1="0" y1={pts[0].y} x2="100%" y2={pts[0].y} stroke="#EFB90B" strokeWidth="2" strokeDasharray="4 4" />;
+    }
+    if (shape.tool === 'pencil') {
+      const d = `M ${pts.map(p => `${p.x},${p.y}`).join(' L ')}`;
+      return <path key={i} d={d} stroke="white" strokeWidth="2" fill="none" />;
+    }
+    if (shape.tool === 'text') {
+      return <text key={i} x={pts[0].x} y={pts[0].y} fill="white" fontSize="16" fontFamily="sans-serif">Text Note</text>;
+    }
+    return null;
+  };
 
   return (
     <div style={{ position: 'relative', width: '100%', height: '100%', background: '#1E222D' }}>
@@ -186,6 +278,21 @@ export default function Chart({ activeStock, indicators, interval, timeframe, on
       )}
 
       <div ref={containerRef} className="tv-chart-container" />
+
+      {isDrawing && (
+        <div
+          onMouseDown={handleMouseDown}
+          onMouseMove={handleMouseMove}
+          onMouseUp={handleMouseUp}
+          onMouseLeave={handleMouseUp}
+          style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: 20, cursor: 'crosshair' }}
+        />
+      )}
+
+      <svg key={redraw} style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', pointerEvents: 'none', zIndex: 10 }}>
+        {drawings.map((s, i) => renderShape(s, i))}
+        {currentDraw && renderShape(currentDraw, 'current')}
+      </svg>
     </div>
   );
 }

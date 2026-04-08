@@ -1179,3 +1179,115 @@
   overflow: hidden;
   background: var(--bg);
 }
+
+/* =========================================================================
+   MOBILE RESPONSIVENESS AND TABLET BREAKPOINTS
+========================================================================= */
+
+@media (max-width: 850px) {
+  /* Dashboard layout */
+  .workspace {
+    flex-direction: column;
+  }
+
+  .left-toolbar {
+    width: 100%;
+    height: 46px;
+    flex-direction: row;
+    overflow-x: auto;
+    overflow-y: hidden;
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+    justify-content: flex-start;
+    padding: 0 6px;
+  }
+  
+  .lt-divider {
+    width: 1px;
+    height: 24px;
+    margin: 0 4px;
+  }
+
+  .right-panel {
+    width: 100%;
+    flex: none;
+    height: 45vh; /* Take up bottom 45% screen for watchlist */
+    border-left: none;
+    border-top: 1px solid var(--border);
+  }
+
+  .tv-topbar {
+    overflow-x: auto;
+    padding-right: 0;
+  }
+  
+  .timeframe-bar {
+    overflow-x: auto;
+  }
+
+  /* Landing Page layout */
+  .lp-nav {
+    padding: 0 12px;
+  }
+
+  .lp-searchbar {
+    min-width: 0;
+    flex: 1;
+    padding: 6px 12px;
+  }
+
+  .lp-searchbar input {
+    width: 100%;
+  }
+
+  .lp-navlinks {
+    display: none; /* Hide top links on narrow mobile to save space */
+  }
+
+  .lp-topright {
+    gap: 6px;
+  }
+
+  .lp-upgrade {
+    display: none; /* Hide upgrade button to save top bar space */
+  }
+
+  .lp-scroll {
+    padding: 16px;
+  }
+
+  .lp-summary-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .lp-three-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .lp-news-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .lp-cards-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .lp-rail {
+    display: none; /* Hide right icon rail */
+  }
+
+  .landing-wl-panel {
+    display: none; /* Hide optional side panel if it exists */
+  }
+
+  .lp-hero-price {
+    font-size: 26px;
+  }
+
+  /* Make mini chart cards fit the screen natively */
+  .lp-dom-row {
+    flex-wrap: wrap;
+  }
+}
+

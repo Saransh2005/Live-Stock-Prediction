@@ -14,6 +14,7 @@ export default function Dashboard() {
   const [stockInfo, setStockInfo] = useState(null);
   const [interval, setInterval] = useState('1D');
   const [timeframe, setTimeframe] = useState('3M');
+  const [activeTool, setActiveTool] = useState('cursor');
 
   const handleSelectStock = (sym) => {
     setActiveStock(sym);
@@ -32,7 +33,7 @@ export default function Dashboard() {
         setTimeframe={setTimeframe}
       />
       <div className="workspace">
-        <LeftToolbar />
+        <LeftToolbar activeTool={activeTool} setActiveTool={setActiveTool} />
         <div className="main-content">
           <div className="main-chart-area">
             <Chart
@@ -40,6 +41,7 @@ export default function Dashboard() {
               indicators={indicators}
               interval={interval}
               timeframe={timeframe}
+              activeTool={activeTool}
               onDataUpdate={setStockInfo}
             />
           </div>

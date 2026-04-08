@@ -47,8 +47,7 @@ const tools = [
   )},
 ];
 
-export default function LeftToolbar() {
-  const [active, setActive] = useState('cursor');
+export default function LeftToolbar({ activeTool, setActiveTool }) {
 
   return (
     <div className="left-toolbar">
@@ -57,8 +56,8 @@ export default function LeftToolbar() {
         return (
           <div
             key={tool.id}
-            className={`lt-btn ${active === tool.id ? 'active' : ''}`}
-            onClick={() => setActive(tool.id)}
+            className={`lt-btn ${activeTool === tool.id ? 'active' : ''}`}
+            onClick={() => setActiveTool(tool.id)}
             title={tool.id}
           >
             {tool.icon}
