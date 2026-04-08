@@ -4,6 +4,10 @@ import yfinance as yf
 import pandas as pd
 import numpy as np
 from urllib.parse import urlparse, parse_qs
+import time
+
+CACHE = {}
+CACHE_TTL = 60
 
 
 def calc_rsi(closes, period=14):
@@ -23,6 +27,11 @@ class handler(BaseHTTPRequestHandler):
 
         if not stock:
             return self._json({"error": "No stock provided"}, 400)
+
+        cache_key = f"{stock}_{period}_{interval}"
+        now = time.time()
+        if cache_key in CACHE and (now - CACHE[cache_key]['ts']) < CACHE_TTL:
+            return self._json(CACHE[cache_key]['data'])
 
         try:
             df = yf.download(stock, period=period, interval=interval, auto_adjust=True, progress=False)
@@ -80,7 +89,7 @@ class handler(BaseHTTPRequestHandler):
                     "bb_low": safe(bb_low, ts),
                 })
 
-            self._json({
+            data_payload = {
                 "chart_data": chart_data,
                 "current_price": round(current_price, 4),
                 "predicted_price": round(predicted_price, 4),
@@ -91,7 +100,9 @@ class handler(BaseHTTPRequestHandler):
                 "high": round(float(df['High'].iloc[-1]), 4),
                 "low": round(float(df['Low'].iloc[-1]), 4),
                 "volume_today": int(df['Volume'].iloc[-1]) if 'Volume' in df.columns else 0,
-            })
+            }
+            CACHE[cache_key] = {'ts': now, 'data': data_payload}
+            self._json(data_payload)
 
         except Exception as e:
             self._json({"error": str(e)}, 500)

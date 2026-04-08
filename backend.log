@@ -1941,3 +1941,356 @@ HTTP Error 401: {"finance":{"result":null,"error":{"code":"Unauthorized","descri
 /Users/saranshsingh8888icloud.com/Documents/stock-price-prediction/.venv/lib/python3.9/site-packages/sklearn/utils/validation.py:2739: UserWarning: X does not have valid feature names, but LinearRegression was fitted with feature names
   warnings.warn(
 127.0.0.1 - - [24/Mar/2026 15:42:05] "GET /api/watchlist?stocks=^NSEI,^BSESN,^GSPC,^NDX,^DJI,AAPL,TSLA,NVDA,RELIANCE.NS,TCS.NS,HDFCBANK.NS,GC=F,CL=F HTTP/1.1" 200 -
+[*********************100%***********************]  1 of 1 completed
+/Users/saranshsingh8888icloud.com/Documents/stock-price-prediction/.venv/lib/python3.9/site-packages/sklearn/utils/validation.py:2739: UserWarning: X does not have valid feature names, but LinearRegression was fitted with feature names
+  warnings.warn(
+[*********************100%***********************]  1 of 1 completed
+/Users/saranshsingh8888icloud.com/Documents/stock-price-prediction/.venv/lib/python3.9/site-packages/sklearn/utils/validation.py:2739: UserWarning: X does not have valid feature names, but LinearRegression was fitted with feature names
+  warnings.warn(
+[*********************100%***********************]  1 of 1 completed
+/Users/saranshsingh8888icloud.com/Documents/stock-price-prediction/.venv/lib/python3.9/site-packages/sklearn/utils/validation.py:2739: UserWarning: X does not have valid feature names, but LinearRegression was fitted with feature names
+  warnings.warn(
+[*********************100%***********************]  1 of 1 completed
+/Users/saranshsingh8888icloud.com/Documents/stock-price-prediction/.venv/lib/python3.9/site-packages/sklearn/utils/validation.py:2739: UserWarning: X does not have valid feature names, but LinearRegression was fitted with feature names
+  warnings.warn(
+[*********************100%***********************]  1 of 1 completed[*********************100%***********************]  1 of 1 completed
+
+[*********************100%***********************]  1 of 1 completed
+/Users/saranshsingh8888icloud.com/Documents/stock-price-prediction/.venv/lib/python3.9/site-packages/sklearn/utils/validation.py:2739: UserWarning: X does not have valid feature names, but LinearRegression was fitted with feature names
+  warnings.warn(
+/Users/saranshsingh8888icloud.com/Documents/stock-price-prediction/.venv/lib/python3.9/site-packages/sklearn/utils/validation.py:2739: UserWarning: X does not have valid feature names, but LinearRegression was fitted with feature names
+  warnings.warn(
+127.0.0.1 - - [24/Mar/2026 15:56:57] "GET /api/stock_data?stock=000001&period=3mo&interval=1d HTTP/1.1" 200 -
+[*********************100%***********************]  1 of 1 completed
+[*********************100%***********************]  1 of 1 completed/Users/saranshsingh8888icloud.com/Documents/stock-price-prediction/.venv/lib/python3.9/site-packages/sklearn/utils/validation.py:2739: UserWarning: X does not have valid feature names, but LinearRegression was fitted with feature names
+  warnings.warn(
+
+[*********************100%***********************]  1 of 1 completed
+/Users/saranshsingh8888icloud.com/Documents/stock-price-prediction/.venv/lib/python3.9/site-packages/sklearn/utils/validation.py:2739: UserWarning: X does not have valid feature names, but LinearRegression was fitted with feature names
+  warnings.warn(
+[*********************100%***********************]  1 of 1 completed
+/Users/saranshsingh8888icloud.com/Documents/stock-price-prediction/.venv/lib/python3.9/site-packages/sklearn/utils/validation.py:2739: UserWarning: X does not have valid feature names, but LinearRegression was fitted with feature names
+  warnings.warn(
+$000001: possibly delisted; no price data found  (period=3mo) (Yahoo error = "No data found, symbol may be delisted")
+[*********************100%***********************]  1 of 1 completed
+[*********************100%***********************]  1 of 1 completed
+
+1 Failed download:
+[*********************100%***********************]  1 of 1 completed
+
+1 Failed download:
+['000001']: possibly delisted; no price data found  (period=3mo) (Yahoo error = "No data found, symbol may be delisted")
+
+1 Failed download:
+127.0.0.1 - - [24/Mar/2026 15:56:58] "[35m[1mGET /api/stock_data?stock=HDFCBANK.NS&period=3mo&interval=1d HTTP/1.1[0m" 500 -
+['000001']: possibly delisted; no price data found  (period=3mo) (Yahoo error = "No data found, symbol may be delisted")
+[*********************100%***********************]  1 of 1 completed
+/Users/saranshsingh8888icloud.com/Documents/stock-price-prediction/.venv/lib/python3.9/site-packages/sklearn/utils/validation.py:2739: UserWarning: X does not have valid feature names, but LinearRegression was fitted with feature names
+  warnings.warn(
+[*********************100%***********************]  1 of 1 completed
+[*********************100%***********************]  1 of 1 completed[*********************100%***********************]  1 of 1 completed
+
+/Users/saranshsingh8888icloud.com/Documents/stock-price-prediction/.venv/lib/python3.9/site-packages/sklearn/utils/validation.py:2739: UserWarning: X does not have valid feature names, but LinearRegression was fitted with feature names
+  warnings.warn(
+/Users/saranshsingh8888icloud.com/Documents/stock-price-prediction/.venv/lib/python3.9/site-packages/sklearn/utils/validation.py:2739: UserWarning: X does not have valid feature names, but LinearRegression was fitted with feature names
+  warnings.warn(
+[*********************100%***********************]  1 of 1 completed
+/Users/saranshsingh8888icloud.com/Documents/stock-price-prediction/.venv/lib/python3.9/site-packages/sklearn/utils/validation.py:2739: UserWarning: X does not have valid feature names, but LinearRegression was fitted with feature names
+  warnings.warn(
+[*********************100%***********************]  1 of 1 completed
+[*********************100%***********************]  1 of 1 completed
+[*********************100%***********************]  1 of 1 completed
+/Users/saranshsingh8888icloud.com/Documents/stock-price-prediction/.venv/lib/python3.9/site-packages/sklearn/utils/validation.py:2739: UserWarning: X does not have valid feature names, but LinearRegression was fitted with feature names
+  warnings.warn(
+/Users/saranshsingh8888icloud.com/Documents/stock-price-prediction/.venv/lib/python3.9/site-packages/sklearn/utils/validation.py:2739: UserWarning: X does not have valid feature names, but LinearRegression was fitted with feature names
+  warnings.warn(
+127.0.0.1 - - [24/Mar/2026 15:56:59] "GET /api/watchlist?stocks=AAPL,TSLA,NVDA,^GSPC,^NDX,^NSEI,^BSESN,BTC-USD,ETH-USD,GC=F,CL=F HTTP/1.1" 200 -
+[*********************100%***********************]  1 of 1 completed
+/Users/saranshsingh8888icloud.com/Documents/stock-price-prediction/.venv/lib/python3.9/site-packages/sklearn/utils/validation.py:2739: UserWarning: X does not have valid feature names, but LinearRegression was fitted with feature names
+  warnings.warn(
+[*********************100%***********************]  1 of 1 completed
+/Users/saranshsingh8888icloud.com/Documents/stock-price-prediction/.venv/lib/python3.9/site-packages/sklearn/utils/validation.py:2739: UserWarning: X does not have valid feature names, but LinearRegression was fitted with feature names
+  warnings.warn(
+[*********************100%***********************]  1 of 1 completed
+/Users/saranshsingh8888icloud.com/Documents/stock-price-prediction/.venv/lib/python3.9/site-packages/sklearn/utils/validation.py:2739: UserWarning: X does not have valid feature names, but LinearRegression was fitted with feature names
+  warnings.warn(
+[*********************100%***********************]  1 of 1 completed
+/Users/saranshsingh8888icloud.com/Documents/stock-price-prediction/.venv/lib/python3.9/site-packages/sklearn/utils/validation.py:2739: UserWarning: X does not have valid feature names, but LinearRegression was fitted with feature names
+  warnings.warn(
+127.0.0.1 - - [24/Mar/2026 15:56:59] "GET /api/watchlist?stocks=^NSEI,^BSESN,^GSPC,^NDX,^DJI,AAPL,TSLA,NVDA,RELIANCE.NS,TCS.NS,HDFCBANK.NS,GC=F,CL=F HTTP/1.1" 200 -
+[*********************100%***********************]  1 of 1 completed
+/Users/saranshsingh8888icloud.com/Documents/stock-price-prediction/.venv/lib/python3.9/site-packages/sklearn/utils/validation.py:2739: UserWarning: X does not have valid feature names, but LinearRegression was fitted with feature names
+  warnings.warn(
+127.0.0.1 - - [24/Mar/2026 15:56:59] "GET /api/stock_data?stock=TCS.NS&period=3mo&interval=1d HTTP/1.1" 200 -
+[*********************100%***********************]  1 of 1 completed
+/Users/saranshsingh8888icloud.com/Documents/stock-price-prediction/.venv/lib/python3.9/site-packages/sklearn/utils/validation.py:2739: UserWarning: X does not have valid feature names, but LinearRegression was fitted with feature names
+  warnings.warn(
+127.0.0.1 - - [24/Mar/2026 15:57:01] "GET /api/stock_data?stock=RELIANCE.NS&period=3mo&interval=1d HTTP/1.1" 200 -
+[*********************100%***********************]  1 of 1 completed
+/Users/saranshsingh8888icloud.com/Documents/stock-price-prediction/.venv/lib/python3.9/site-packages/sklearn/utils/validation.py:2739: UserWarning: X does not have valid feature names, but LinearRegression was fitted with feature names
+  warnings.warn(
+127.0.0.1 - - [24/Mar/2026 15:57:02] "GET /api/stock_data?stock=NVDA&period=3mo&interval=1d HTTP/1.1" 200 -
+[*********************100%***********************]  1 of 1 completed
+/Users/saranshsingh8888icloud.com/Documents/stock-price-prediction/.venv/lib/python3.9/site-packages/sklearn/utils/validation.py:2739: UserWarning: X does not have valid feature names, but LinearRegression was fitted with feature names
+  warnings.warn(
+127.0.0.1 - - [24/Mar/2026 15:57:02] "GET /api/stock_data?stock=AAPL&period=3mo&interval=1d HTTP/1.1" 200 -
+[*********************100%***********************]  1 of 1 completed
+/Users/saranshsingh8888icloud.com/Documents/stock-price-prediction/.venv/lib/python3.9/site-packages/sklearn/utils/validation.py:2739: UserWarning: X does not have valid feature names, but LinearRegression was fitted with feature names
+  warnings.warn(
+127.0.0.1 - - [24/Mar/2026 15:57:03] "GET /api/stock_data?stock=AAPL&period=3mo&interval=1d HTTP/1.1" 200 -
+[*********************100%***********************]  1 of 1 completed
+/Users/saranshsingh8888icloud.com/Documents/stock-price-prediction/.venv/lib/python3.9/site-packages/sklearn/utils/validation.py:2739: UserWarning: X does not have valid feature names, but LinearRegression was fitted with feature names
+  warnings.warn(
+[*********************100%***********************]  1 of 1 completed
+/Users/saranshsingh8888icloud.com/Documents/stock-price-prediction/.venv/lib/python3.9/site-packages/sklearn/utils/validation.py:2739: UserWarning: X does not have valid feature names, but LinearRegression was fitted with feature names
+  warnings.warn(
+[*********************100%***********************]  1 of 1 completed
+/Users/saranshsingh8888icloud.com/Documents/stock-price-prediction/.venv/lib/python3.9/site-packages/sklearn/utils/validation.py:2739: UserWarning: X does not have valid feature names, but LinearRegression was fitted with feature names
+  warnings.warn(
+[*********************100%***********************]  1 of 1 completed
+/Users/saranshsingh8888icloud.com/Documents/stock-price-prediction/.venv/lib/python3.9/site-packages/sklearn/utils/validation.py:2739: UserWarning: X does not have valid feature names, but LinearRegression was fitted with feature names
+  warnings.warn(
+[*********************100%***********************]  1 of 1 completed
+[*********************100%***********************]  1 of 1 completed/Users/saranshsingh8888icloud.com/Documents/stock-price-prediction/.venv/lib/python3.9/site-packages/sklearn/utils/validation.py:2739: UserWarning: X does not have valid feature names, but LinearRegression was fitted with feature names
+  warnings.warn(
+
+[*********************100%***********************]  1 of 1 completed/Users/saranshsingh8888icloud.com/Documents/stock-price-prediction/.venv/lib/python3.9/site-packages/sklearn/utils/validation.py:2739: UserWarning: X does not have valid feature names, but LinearRegression was fitted with feature names
+  warnings.warn(
+127.0.0.1 - - [24/Mar/2026 15:57:04] "GET /api/stock_data?stock=AAPL&period=3mo&interval=1d HTTP/1.1" 200 -
+
+/Users/saranshsingh8888icloud.com/Documents/stock-price-prediction/.venv/lib/python3.9/site-packages/sklearn/utils/validation.py:2739: UserWarning: X does not have valid feature names, but LinearRegression was fitted with feature names
+  warnings.warn(
+[*********************100%***********************]  1 of 1 completed
+[*********************100%***********************]  1 of 1 completed
+/Users/saranshsingh8888icloud.com/Documents/stock-price-prediction/.venv/lib/python3.9/site-packages/sklearn/utils/validation.py:2739: UserWarning: X does not have valid feature names, but LinearRegression was fitted with feature names
+  warnings.warn(
+/Users/saranshsingh8888icloud.com/Documents/stock-price-prediction/.venv/lib/python3.9/site-packages/sklearn/utils/validation.py:2739: UserWarning: X does not have valid feature names, but LinearRegression was fitted with feature names
+  warnings.warn(
+[*********************100%***********************]  1 of 1 completed
+/Users/saranshsingh8888icloud.com/Documents/stock-price-prediction/.venv/lib/python3.9/site-packages/sklearn/utils/validation.py:2739: UserWarning: X does not have valid feature names, but LinearRegression was fitted with feature names
+  warnings.warn(
+[*********************100%***********************]  1 of 1 completed[*********************100%***********************]  1 of 1 completed
+
+[*********************100%***********************]  1 of 1 completed
+[*********************100%***********************]  1 of 1 completed
+/Users/saranshsingh8888icloud.com/Documents/stock-price-prediction/.venv/lib/python3.9/site-packages/sklearn/utils/validation.py:2739: UserWarning: X does not have valid feature names, but LinearRegression was fitted with feature names
+  warnings.warn(
+/Users/saranshsingh8888icloud.com/Documents/stock-price-prediction/.venv/lib/python3.9/site-packages/sklearn/utils/validation.py:2739: UserWarning: X does not have valid feature names, but LinearRegression was fitted with feature names
+  warnings.warn(
+/Users/saranshsingh8888icloud.com/Documents/stock-price-prediction/.venv/lib/python3.9/site-packages/sklearn/utils/validation.py:2739: UserWarning: X does not have valid feature names, but LinearRegression was fitted with feature names
+  warnings.warn(
+/Users/saranshsingh8888icloud.com/Documents/stock-price-prediction/.venv/lib/python3.9/site-packages/sklearn/utils/validation.py:2739: UserWarning: X does not have valid feature names, but LinearRegression was fitted with feature names
+  warnings.warn(
+127.0.0.1 - - [24/Mar/2026 15:57:04] "GET /api/stock_data?stock=AAPL&period=3mo&interval=1d HTTP/1.1" 200 -
+[*********************100%***********************]  1 of 1 completed
+/Users/saranshsingh8888icloud.com/Documents/stock-price-prediction/.venv/lib/python3.9/site-packages/sklearn/utils/validation.py:2739: UserWarning: X does not have valid feature names, but LinearRegression was fitted with feature names
+  warnings.warn(
+[*********************100%***********************]  1 of 1 completed
+[*********************100%***********************]  1 of 1 completed
+[*********************100%***********************]  1 of 1 completed[*********************100%***********************]  1 of 1 completed
+
+/Users/saranshsingh8888icloud.com/Documents/stock-price-prediction/.venv/lib/python3.9/site-packages/sklearn/utils/validation.py:2739: UserWarning: X does not have valid feature names, but LinearRegression was fitted with feature names
+  warnings.warn(
+[*********************100%***********************]  1 of 1 completed/Users/saranshsingh8888icloud.com/Documents/stock-price-prediction/.venv/lib/python3.9/site-packages/sklearn/utils/validation.py:2739: UserWarning: X does not have valid feature names, but LinearRegression was fitted with feature names
+  warnings.warn(
+
+[*********************100%***********************]  1 of 1 completed
+/Users/saranshsingh8888icloud.com/Documents/stock-price-prediction/.venv/lib/python3.9/site-packages/sklearn/utils/validation.py:2739: UserWarning: X does not have valid feature names, but LinearRegression was fitted with feature names
+  warnings.warn(
+[*********************100%***********************]  1 of 1 completed
+/Users/saranshsingh8888icloud.com/Documents/stock-price-prediction/.venv/lib/python3.9/site-packages/sklearn/utils/validation.py:2739: UserWarning: X does not have valid feature names, but LinearRegression was fitted with feature names
+  warnings.warn(
+[*********************100%***********************]  1 of 1 completed
+[*********************100%***********************]  1 of 1 completed
+[*********************100%***********************]  1 of 1 completed[*********************100%***********************]  1 of 1 completed
+
+/Users/saranshsingh8888icloud.com/Documents/stock-price-prediction/.venv/lib/python3.9/site-packages/sklearn/utils/validation.py:2739: UserWarning: X does not have valid feature names, but LinearRegression was fitted with feature names
+  warnings.warn(
+/Users/saranshsingh8888icloud.com/Documents/stock-price-prediction/.venv/lib/python3.9/site-packages/sklearn/utils/validation.py:2739: UserWarning: X does not have valid feature names, but LinearRegression was fitted with feature names
+  warnings.warn(
+[*********************100%***********************]  1 of 1 completed
+[*********************100%***********************]  1 of 1 completed
+[*********************100%***********************]  1 of 1 completed
+/Users/saranshsingh8888icloud.com/Documents/stock-price-prediction/.venv/lib/python3.9/site-packages/sklearn/utils/validation.py:2739: UserWarning: X does not have valid feature names, but LinearRegression was fitted with feature names
+  warnings.warn(
+/Users/saranshsingh8888icloud.com/Documents/stock-price-prediction/.venv/lib/python3.9/site-packages/sklearn/utils/validation.py:2739: UserWarning: X does not have valid feature names, but LinearRegression was fitted with feature names
+  warnings.warn(
+127.0.0.1 - - [24/Mar/2026 15:57:04] "GET /api/stock_data?stock=AAPL&period=3mo&interval=1d HTTP/1.1" 200 -
+[*********************100%***********************]  1 of 1 completed
+[*********************100%***********************]  1 of 1 completed
+[*********************100%***********************]  1 of 1 completed
+/Users/saranshsingh8888icloud.com/Documents/stock-price-prediction/.venv/lib/python3.9/site-packages/sklearn/utils/validation.py:2739: UserWarning: X does not have valid feature names, but LinearRegression was fitted with feature names
+  warnings.warn(
+[*********************100%***********************]  1 of 1 completed
+/Users/saranshsingh8888icloud.com/Documents/stock-price-prediction/.venv/lib/python3.9/site-packages/sklearn/utils/validation.py:2739: UserWarning: X does not have valid feature names, but LinearRegression was fitted with feature names
+  warnings.warn(
+/Users/saranshsingh8888icloud.com/Documents/stock-price-prediction/.venv/lib/python3.9/site-packages/sklearn/utils/validation.py:2739: UserWarning: X does not have valid feature names, but LinearRegression was fitted with feature names
+  warnings.warn(
+127.0.0.1 - - [24/Mar/2026 15:57:04] "GET /api/watchlist?stocks=^NSEI,^BSESN,^GSPC,^NDX,^DJI,AAPL,TSLA,NVDA,RELIANCE.NS,TCS.NS,HDFCBANK.NS,GC=F,CL=F HTTP/1.1" 200 -
+[*********************100%***********************]  1 of 1 completed
+[*********************100%***********************]  1 of 1 completed
+[*********************100%***********************]  1 of 1 completed
+/Users/saranshsingh8888icloud.com/Documents/stock-price-prediction/.venv/lib/python3.9/site-packages/sklearn/utils/validation.py:2739: UserWarning: X does not have valid feature names, but LinearRegression was fitted with feature names
+  warnings.warn(
+/Users/saranshsingh8888icloud.com/Documents/stock-price-prediction/.venv/lib/python3.9/site-packages/sklearn/utils/validation.py:2739: UserWarning: X does not have valid feature names, but LinearRegression was fitted with feature names
+  warnings.warn(
+/Users/saranshsingh8888icloud.com/Documents/stock-price-prediction/.venv/lib/python3.9/site-packages/sklearn/utils/validation.py:2739: UserWarning: X does not have valid feature names, but LinearRegression was fitted with feature names
+  warnings.warn(
+[*********************100%***********************]  1 of 1 completed
+/Users/saranshsingh8888icloud.com/Documents/stock-price-prediction/.venv/lib/python3.9/site-packages/sklearn/utils/validation.py:2739: UserWarning: X does not have valid feature names, but LinearRegression was fitted with feature names
+  warnings.warn(
+[*********************100%***********************]  1 of 1 completed
+[*********************100%***********************]  1 of 1 completed
+[*********************100%***********************]  1 of 1 completed
+[*********************100%***********************]  1 of 1 completed
+/Users/saranshsingh8888icloud.com/Documents/stock-price-prediction/.venv/lib/python3.9/site-packages/sklearn/utils/validation.py:2739: UserWarning: X does not have valid feature names, but LinearRegression was fitted with feature names
+  warnings.warn(
+/Users/saranshsingh8888icloud.com/Documents/stock-price-prediction/.venv/lib/python3.9/site-packages/sklearn/utils/validation.py:2739: UserWarning: X does not have valid feature names, but LinearRegression was fitted with feature names
+  warnings.warn(
+/Users/saranshsingh8888icloud.com/Documents/stock-price-prediction/.venv/lib/python3.9/site-packages/sklearn/utils/validation.py:2739: UserWarning: X does not have valid feature names, but LinearRegression was fitted with feature names
+  warnings.warn(
+[*********************100%***********************]  1 of 1 completed
+[*********************100%***********************]  1 of 1 completed/Users/saranshsingh8888icloud.com/Documents/stock-price-prediction/.venv/lib/python3.9/site-packages/sklearn/utils/validation.py:2739: UserWarning: X does not have valid feature names, but LinearRegression was fitted with feature names
+  warnings.warn(
+
+[*********************100%***********************]  1 of 1 completed/Users/saranshsingh8888icloud.com/Documents/stock-price-prediction/.venv/lib/python3.9/site-packages/sklearn/utils/validation.py:2739: UserWarning: X does not have valid feature names, but LinearRegression was fitted with feature names
+  warnings.warn(
+
+127.0.0.1 - - [24/Mar/2026 15:57:05] "GET /api/watchlist?stocks=^NSEI,^BSESN,^GSPC,^NDX,^DJI,AAPL,TSLA,NVDA,RELIANCE.NS,TCS.NS,HDFCBANK.NS,GC=F,CL=F HTTP/1.1" 200 -
+[*********************100%***********************]  1 of 1 completed
+[*********************100%***********************]  1 of 1 completed
+/Users/saranshsingh8888icloud.com/Documents/stock-price-prediction/.venv/lib/python3.9/site-packages/sklearn/utils/validation.py:2739: UserWarning: X does not have valid feature names, but LinearRegression was fitted with feature names
+  warnings.warn(
+/Users/saranshsingh8888icloud.com/Documents/stock-price-prediction/.venv/lib/python3.9/site-packages/sklearn/utils/validation.py:2739: UserWarning: X does not have valid feature names, but LinearRegression was fitted with feature names
+  warnings.warn(
+[*********************100%***********************]  1 of 1 completed
+[*********************100%***********************]  1 of 1 completed
+/Users/saranshsingh8888icloud.com/Documents/stock-price-prediction/.venv/lib/python3.9/site-packages/sklearn/utils/validation.py:2739: UserWarning: X does not have valid feature names, but LinearRegression was fitted with feature names
+  warnings.warn(
+/Users/saranshsingh8888icloud.com/Documents/stock-price-prediction/.venv/lib/python3.9/site-packages/sklearn/utils/validation.py:2739: UserWarning: X does not have valid feature names, but LinearRegression was fitted with feature names
+  warnings.warn(
+[*********************100%***********************]  1 of 1 completed
+[*********************100%***********************]  1 of 1 completed
+/Users/saranshsingh8888icloud.com/Documents/stock-price-prediction/.venv/lib/python3.9/site-packages/sklearn/utils/validation.py:2739: UserWarning: X does not have valid feature names, but LinearRegression was fitted with feature names
+  warnings.warn(
+/Users/saranshsingh8888icloud.com/Documents/stock-price-prediction/.venv/lib/python3.9/site-packages/sklearn/utils/validation.py:2739: UserWarning: X does not have valid feature names, but LinearRegression was fitted with feature names
+  warnings.warn(
+127.0.0.1 - - [24/Mar/2026 15:57:05] "GET /api/watchlist?stocks=^NSEI,^BSESN,^GSPC,^NDX,^DJI,AAPL,TSLA,NVDA,RELIANCE.NS,TCS.NS,HDFCBANK.NS,GC=F,CL=F HTTP/1.1" 200 -
+[*********************100%***********************]  1 of 1 completed
+/Users/saranshsingh8888icloud.com/Documents/stock-price-prediction/.venv/lib/python3.9/site-packages/sklearn/utils/validation.py:2739: UserWarning: X does not have valid feature names, but LinearRegression was fitted with feature names
+  warnings.warn(
+[*********************100%***********************]  1 of 1 completed
+/Users/saranshsingh8888icloud.com/Documents/stock-price-prediction/.venv/lib/python3.9/site-packages/sklearn/utils/validation.py:2739: UserWarning: X does not have valid feature names, but LinearRegression was fitted with feature names
+  warnings.warn(
+[*********************100%***********************]  1 of 1 completed[*********************100%***********************]  1 of 1 completed
+
+/Users/saranshsingh8888icloud.com/Documents/stock-price-prediction/.venv/lib/python3.9/site-packages/sklearn/utils/validation.py:2739: UserWarning: X does not have valid feature names, but LinearRegression was fitted with feature names
+  warnings.warn(
+/Users/saranshsingh8888icloud.com/Documents/stock-price-prediction/.venv/lib/python3.9/site-packages/sklearn/utils/validation.py:2739: UserWarning: X does not have valid feature names, but LinearRegression was fitted with feature names
+  warnings.warn(
+127.0.0.1 - - [24/Mar/2026 15:57:05] "GET /api/stock_data?stock=TSLA&period=3mo&interval=1d HTTP/1.1" 200 -
+[*********************100%***********************]  1 of 1 completed
+/Users/saranshsingh8888icloud.com/Documents/stock-price-prediction/.venv/lib/python3.9/site-packages/sklearn/utils/validation.py:2739: UserWarning: X does not have valid feature names, but LinearRegression was fitted with feature names
+  warnings.warn(
+[*********************100%***********************]  1 of 1 completed
+/Users/saranshsingh8888icloud.com/Documents/stock-price-prediction/.venv/lib/python3.9/site-packages/sklearn/utils/validation.py:2739: UserWarning: X does not have valid feature names, but LinearRegression was fitted with feature names
+  warnings.warn(
+127.0.0.1 - - [24/Mar/2026 15:57:05] "GET /api/watchlist?stocks=^NSEI,^BSESN,^GSPC,^NDX,^DJI,AAPL,TSLA,NVDA,RELIANCE.NS,TCS.NS,HDFCBANK.NS,GC=F,CL=F HTTP/1.1" 200 -
+[*********************100%***********************]  1 of 1 completed
+/Users/saranshsingh8888icloud.com/Documents/stock-price-prediction/.venv/lib/python3.9/site-packages/sklearn/utils/validation.py:2739: UserWarning: X does not have valid feature names, but LinearRegression was fitted with feature names
+  warnings.warn(
+127.0.0.1 - - [24/Mar/2026 15:57:06] "GET /api/stock_data?stock=NVDA&period=3mo&interval=1d HTTP/1.1" 200 -
+[*********************100%***********************]  1 of 1 completed
+/Users/saranshsingh8888icloud.com/Documents/stock-price-prediction/.venv/lib/python3.9/site-packages/sklearn/utils/validation.py:2739: UserWarning: X does not have valid feature names, but LinearRegression was fitted with feature names
+  warnings.warn(
+127.0.0.1 - - [24/Mar/2026 15:57:07] "GET /api/stock_data?stock=^GSPC&period=3mo&interval=1d HTTP/1.1" 200 -
+[*********************100%***********************]  1 of 1 completed
+/Users/saranshsingh8888icloud.com/Documents/stock-price-prediction/.venv/lib/python3.9/site-packages/sklearn/utils/validation.py:2739: UserWarning: X does not have valid feature names, but LinearRegression was fitted with feature names
+  warnings.warn(
+127.0.0.1 - - [24/Mar/2026 15:57:08] "GET /api/stock_data?stock=^DJI&period=3mo&interval=1d HTTP/1.1" 200 -
+[*********************100%***********************]  1 of 1 completed
+/Users/saranshsingh8888icloud.com/Documents/stock-price-prediction/.venv/lib/python3.9/site-packages/sklearn/utils/validation.py:2739: UserWarning: X does not have valid feature names, but LinearRegression was fitted with feature names
+  warnings.warn(
+127.0.0.1 - - [24/Mar/2026 15:57:08] "GET /api/stock_data?stock=^GSPC&period=3mo&interval=1d HTTP/1.1" 200 -
+[*********************100%***********************]  1 of 1 completed
+/Users/saranshsingh8888icloud.com/Documents/stock-price-prediction/.venv/lib/python3.9/site-packages/sklearn/utils/validation.py:2739: UserWarning: X does not have valid feature names, but LinearRegression was fitted with feature names
+  warnings.warn(
+127.0.0.1 - - [24/Mar/2026 15:57:09] "GET /api/stock_data?stock=^BSESN&period=3mo&interval=1d HTTP/1.1" 200 -
+[*********************100%***********************]  1 of 1 completed[*********************100%***********************]  1 of 1 completed[*********************100%***********************]  1 of 1 completed
+
+
+/Users/saranshsingh8888icloud.com/Documents/stock-price-prediction/.venv/lib/python3.9/site-packages/sklearn/utils/validation.py:2739: UserWarning: X does not have valid feature names, but LinearRegression was fitted with feature names
+  warnings.warn(
+127.0.0.1 - - [24/Mar/2026 22:13:31] "GET /api/stock_data?stock=UKX&period=3mo&interval=1d HTTP/1.1" 200 -
+/Users/saranshsingh8888icloud.com/Documents/stock-price-prediction/.venv/lib/python3.9/site-packages/sklearn/utils/validation.py:2739: UserWarning: X does not have valid feature names, but LinearRegression was fitted with feature names
+  warnings.warn(
+[*********************100%***********************]  1 of 1 completed
+[*********************100%***********************]  1 of 1 completed
+/Users/saranshsingh8888icloud.com/Documents/stock-price-prediction/.venv/lib/python3.9/site-packages/sklearn/utils/validation.py:2739: UserWarning: X does not have valid feature names, but LinearRegression was fitted with feature names
+  warnings.warn(
+[*********************100%***********************]  1 of 1 completed/Users/saranshsingh8888icloud.com/Documents/stock-price-prediction/.venv/lib/python3.9/site-packages/sklearn/utils/validation.py:2739: UserWarning: X does not have valid feature names, but LinearRegression was fitted with feature names
+  warnings.warn(
+
+127.0.0.1 - - [24/Mar/2026 22:13:32] "GET /api/stock_data?stock=AAPL&period=3mo&interval=1d HTTP/1.1" 200 -
+[*********************100%***********************]  1 of 1 completed
+/Users/saranshsingh8888icloud.com/Documents/stock-price-prediction/.venv/lib/python3.9/site-packages/sklearn/utils/validation.py:2739: UserWarning: X does not have valid feature names, but LinearRegression was fitted with feature names
+  warnings.warn(
+[*********************100%***********************]  1 of 1 completed
+[*********************100%***********************]  1 of 1 completed
+/Users/saranshsingh8888icloud.com/Documents/stock-price-prediction/.venv/lib/python3.9/site-packages/sklearn/utils/validation.py:2739: UserWarning: X does not have valid feature names, but LinearRegression was fitted with feature names
+  warnings.warn(
+/Users/saranshsingh8888icloud.com/Documents/stock-price-prediction/.venv/lib/python3.9/site-packages/sklearn/utils/validation.py:2739: UserWarning: X does not have valid feature names, but LinearRegression was fitted with feature names
+  warnings.warn(
+$UKX: possibly delisted; no price data found  (period=3mo)
+[*********************100%***********************]  1 of 1 completed
+
+1 Failed download:
+['UKX']: possibly delisted; no price data found  (period=3mo)
+[*********************100%***********************]  1 of 1 completed
+[*********************100%***********************]  1 of 1 completed
+[*********************100%***********************]  1 of 1 completed/Users/saranshsingh8888icloud.com/Documents/stock-price-prediction/.venv/lib/python3.9/site-packages/sklearn/utils/validation.py:2739: UserWarning: X does not have valid feature names, but LinearRegression was fitted with feature names
+  warnings.warn(
+
+[*********************100%***********************]  1 of 1 completed
+/Users/saranshsingh8888icloud.com/Documents/stock-price-prediction/.venv/lib/python3.9/site-packages/sklearn/utils/validation.py:2739: UserWarning: X does not have valid feature names, but LinearRegression was fitted with feature names
+  warnings.warn(
+[*********************100%***********************]  1 of 1 completed
+/Users/saranshsingh8888icloud.com/Documents/stock-price-prediction/.venv/lib/python3.9/site-packages/sklearn/utils/validation.py:2739: UserWarning: X does not have valid feature names, but LinearRegression was fitted with feature names
+  warnings.warn(
+[*********************100%***********************]  1 of 1 completed
+[*********************100%***********************]  1 of 1 completed
+[*********************100%***********************]  1 of 1 completed/Users/saranshsingh8888icloud.com/Documents/stock-price-prediction/.venv/lib/python3.9/site-packages/sklearn/utils/validation.py:2739: UserWarning: X does not have valid feature names, but LinearRegression was fitted with feature names
+  warnings.warn(
+
+[*********************100%***********************]  1 of 1 completed
+/Users/saranshsingh8888icloud.com/Documents/stock-price-prediction/.venv/lib/python3.9/site-packages/sklearn/utils/validation.py:2739: UserWarning: X does not have valid feature names, but LinearRegression was fitted with feature names
+  warnings.warn(
+[*********************100%***********************]  1 of 1 completed
+[*********************100%***********************]  1 of 1 completed[*********************100%***********************]  1 of 1 completed
+
+/Users/saranshsingh8888icloud.com/Documents/stock-price-prediction/.venv/lib/python3.9/site-packages/sklearn/utils/validation.py:2739: UserWarning: X does not have valid feature names, but LinearRegression was fitted with feature names
+  warnings.warn(
+/Users/saranshsingh8888icloud.com/Documents/stock-price-prediction/.venv/lib/python3.9/site-packages/sklearn/utils/validation.py:2739: UserWarning: X does not have valid feature names, but LinearRegression was fitted with feature names
+  warnings.warn(
+[*********************100%***********************]  1 of 1 completed[*********************100%***********************]  1 of 1 completed
+
+/Users/saranshsingh8888icloud.com/Documents/stock-price-prediction/.venv/lib/python3.9/site-packages/sklearn/utils/validation.py:2739: UserWarning: X does not have valid feature names, but LinearRegression was fitted with feature names
+  warnings.warn(
+/Users/saranshsingh8888icloud.com/Documents/stock-price-prediction/.venv/lib/python3.9/site-packages/sklearn/utils/validation.py:2739: UserWarning: X does not have valid feature names, but LinearRegression was fitted with feature names
+  warnings.warn(
+127.0.0.1 - - [24/Mar/2026 22:13:34] "GET /api/watchlist?stocks=AAPL,TSLA,NVDA,^GSPC,^NDX,^NSEI,^BSESN,BTC-USD,ETH-USD,GC=F,CL=F HTTP/1.1" 200 -
+[*********************100%***********************]  1 of 1 completed
+/Users/saranshsingh8888icloud.com/Documents/stock-price-prediction/.venv/lib/python3.9/site-packages/sklearn/utils/validation.py:2739: UserWarning: X does not have valid feature names, but LinearRegression was fitted with feature names
+  warnings.warn(
+[*********************100%***********************]  1 of 1 completed
+/Users/saranshsingh8888icloud.com/Documents/stock-price-prediction/.venv/lib/python3.9/site-packages/sklearn/utils/validation.py:2739: UserWarning: X does not have valid feature names, but LinearRegression was fitted with feature names
+  warnings.warn(
+127.0.0.1 - - [24/Mar/2026 22:13:35] "GET /api/watchlist?stocks=^NSEI,^BSESN,^GSPC,^NDX,^DJI,AAPL,TSLA,NVDA,RELIANCE.NS,TCS.NS,HDFCBANK.NS,GC=F,CL=F HTTP/1.1" 200 -
+[*********************100%***********************]  1 of 1 completed
+/Users/saranshsingh8888icloud.com/Documents/stock-price-prediction/.venv/lib/python3.9/site-packages/sklearn/utils/validation.py:2739: UserWarning: X does not have valid feature names, but LinearRegression was fitted with feature names
+  warnings.warn(
+127.0.0.1 - - [24/Mar/2026 22:13:35] "GET /api/stock_data?stock=HDFCBANK.NS&period=3mo&interval=1d HTTP/1.1" 200 -
+[*********************100%***********************]  1 of 1 completed
+/Users/saranshsingh8888icloud.com/Documents/stock-price-prediction/.venv/lib/python3.9/site-packages/sklearn/utils/validation.py:2739: UserWarning: X does not have valid feature names, but LinearRegression was fitted with feature names
+  warnings.warn(
+127.0.0.1 - - [24/Mar/2026 22:13:37] "GET /api/stock_data?stock=TCS.NS&period=3mo&interval=1d HTTP/1.1" 200 -

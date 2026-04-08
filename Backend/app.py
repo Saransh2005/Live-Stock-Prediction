@@ -5,9 +5,14 @@ import yfinance as yf
 import numpy as np
 import os
 import pandas as pd
+from concurrent.futures import ThreadPoolExecutor, as_completed
+import time
 
 app = Flask(__name__)
 CORS(app)
+
+CACHE = {}
+CACHE_TTL = 60
 
 # Load model
 model_path = os.path.join(os.path.dirname(__file__), "model.pkl")
@@ -44,9 +49,13 @@ def get_stock_data():
     stock = request.args.get("stock")
     if not stock: return jsonify({"error": "No stock provided"}), 400
 
-    # Accept period & interval from timeframe selector; fallback to sane defaults
     period   = request.args.get("period",   "3mo")
     interval = request.args.get("interval", "1d")
+
+    cache_key = f"{stock}_{period}_{interval}"
+    now = time.time()
+    if cache_key in CACHE and (now - CACHE[cache_key]['ts']) < CACHE_TTL:
+        return jsonify(CACHE[cache_key]['data'])
 
     try:
         data = yf.download(stock, period=period, interval=interval)
@@ -123,7 +132,7 @@ def get_stock_data():
         elif predicted_return > 0: sentiment = "Bullish"
         else: sentiment = "Bearish"
 
-        return jsonify({
+        data_payload = {
             "stock": stock.upper(),
             "current_price": latest_close,
             "change_pct": ((latest_close - prev_close) / prev_close) * 100 if prev_close else 0,
@@ -135,41 +144,55 @@ def get_stock_data():
             "rsi": rsi,
             "macd": chart_data[-1]["macd"],
             "chart_data": chart_data
-        })
+        }
+        CACHE[cache_key] = {'ts': now, 'data': data_payload}
+        return jsonify(data_payload)
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+
+def fetch_symbol(stock):
+    now = time.time()
+    if stock in CACHE and (now - CACHE[stock]['ts']) < CACHE_TTL:
+        return CACHE[stock]['data']
+    try:
+        data = yf.download(stock, period="5d", interval="1d")
+        data = data.dropna()
+        if data.empty: return None
+
+        close_series = data['Close'].iloc[:, 0] if hasattr(data['Close'], 'columns') else data['Close']
+        latest_close = float(close_series.iloc[-1])
+        prev_close = float(close_series.iloc[-2]) if len(close_series) > 1 else latest_close
+        latest_return = (latest_close - prev_close) / prev_close if prev_close != 0 else 0
+
+        predicted_return = model.predict([[latest_return]])[0]
+        pred_price = float(latest_close * (1 + predicted_return))
+        diff = pred_price - latest_close
+
+        res = {
+            "stock": stock,
+            "price": latest_close,
+            "change_pct": ((latest_close - prev_close) / prev_close) * 100 if prev_close else 0,
+            "prediction": pred_price,
+            "signal": "bullish" if diff >= 0 else "bearish"
+        }
+        CACHE[stock] = {'ts': now, 'data': res}
+        return res
+    except Exception:
+        return None
 
 @app.route("/api/watchlist", methods=["GET"])
 def get_watchlist():
     stocks_param = request.args.get("stocks", "AAPL,TSLA,MSFT,NVDA,RELIANCE.NS,TCS.NS,^NSEI")
     stock_list = [s.strip().upper() for s in stocks_param.split(",") if s.strip()]
     results = []
-    
-    for stock in stock_list:
-        try:
-            data = yf.download(stock, period="5d", interval="1d")
-            data = data.dropna()
-            if data.empty: continue
-                
-            close_series = data['Close'].iloc[:, 0] if hasattr(data['Close'], 'columns') else data['Close']
-            latest_close = float(close_series.iloc[-1])
-            prev_close = float(close_series.iloc[-2]) if len(close_series) > 1 else latest_close
-            latest_return = (latest_close - prev_close) / prev_close if prev_close != 0 else 0
-            
-            predicted_return = model.predict([[latest_return]])[0]
-            pred_price = float(latest_close * (1 + predicted_return))
-            diff = pred_price - latest_close
-            
-            results.append({
-                "stock": stock,
-                "price": latest_close,
-                "change_pct": ((latest_close - prev_close) / prev_close) * 100 if prev_close else 0,
-                "prediction": pred_price,
-                "signal": "bullish" if diff >= 0 else "bearish"
-            })
-        except Exception as e:
-            pass
+
+    with ThreadPoolExecutor(max_workers=10) as executor:
+        future_to_sym = {executor.submit(fetch_symbol, stock): stock for stock in stock_list}
+        for future in as_completed(future_to_sym):
+            res = future.result()
+            if res:
+                results.append(res)
 
     return jsonify(results)
 
